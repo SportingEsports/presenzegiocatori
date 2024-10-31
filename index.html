@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presenze Giocatori</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        .presente {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+            cursor: pointer;
+        }
+        .assente {
+            background-color: #F44336; /* Rosso */
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Presenze Giocatori</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome Giocatore</th>
+                <th>Presenza</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Giocatore 1</td>
+                <td onclick="selezionaPresenza(this)">Seleziona</td>
+            </tr>
+            <tr>
+                <td>Giocatore 2</td>
+                <td onclick="selezionaPresenza(this)">Seleziona</td>
+            </tr>
+            <!-- Aggiungi più righe per ogni giocatore -->
+        </tbody>
+    </table>
+
+    <button onclick="salvaPresenze()">Salva Presenze</button>
+
+    <script>
+        function selezionaPresenza(cell) {
+            if (cell.classList.contains('presente')) {
+                cell.className = 'assente';
+                cell.textContent = 'Assente';
+            } else {
+                cell.className = 'presente';
+                cell.textContent = 'Presente';
+            }
+        }
+
+        function salvaPresenze() {
+            const presenze = [];
+            document.querySelectorAll('tbody tr').forEach(row => {
+                const nome = row.cells[0].textContent;
+                const stato = row.cells[1].textContent;
+                presenze.push({ nome, stato });
+            });
+            // Salva i dati nel LocalStorage
+            localStorage.setItem('presenze', JSON.stringify(presenze));
+            alert("Presenze salvate!");
+        }
+    </script>
+</body>
+</html>
